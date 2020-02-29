@@ -1,0 +1,37 @@
+version: '3.1'
+
+services: 
+  oqs:
+    build: ./bin
+    depends_on: 
+      - db
+      - cache
+    restart: always
+    environment: 
+      GIN_MODE: release
+
+    
+  db:
+    image: mysql
+    environment: 
+      MYSQL_DATABASE: "oqs"
+      MYSQL_USER: "oqs"
+      MYSQL_PASSWORD: "${DB_PASSWORD:-5c39cd5ff0f418adc5c31611ca34070a}"
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+    volumes: 
+      - "./database/sql:/docker-entrypoint-initdb.d"
+    restart: always
+    
+  cache:
+    image: redis
+    restart: always
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./nginx/:/etc/nginx"
+    depends_on: 
+      - oqs

@@ -1,0 +1,19 @@
+[general]
+hostname = "example.com"
+recaptchaSecretKey = "123456"
+listen = "0.0.0.0"
+port = 8080
+
+[database]
+addr = "db:3306"
+user = "oqs"
+password = "5c39cd5ff0f418adc5c31611ca34070a"
+databaseName = "oqs"
+
+[redis]
+addr = "cache:6379"
+password = ""
+
+[logger]
+error = "/var/log/oqs/errors.log"
+normal = "/var/log/oqs/logs.log"
